@@ -1,0 +1,2 @@
+import type{JevProvider}from"./jev.mjs";export const OUTCOMES:readonly string[];export type AccessRequest={id:string;administration:string;document:string;context:string;receivedAt:string};export type CadaPrecedent={reference:string;sessionDate:string;administration:string;theme:string;keywords:string[];conclusion:string;text:string;sourceUrl:string};
+export function accessRequest(input:any):AccessRequest;export function cadaPrecedent(input:any):CadaPrecedent;export function triageRequest(request:any,precedent:any,provider:JevProvider):Promise<any>;
