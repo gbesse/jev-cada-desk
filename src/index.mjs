@@ -1,4 +1,4 @@
-// Purpose: Prepare a review queue from a public-document request and a sourced CADA precedent.
+// Objectif : implémenter la frontière de décision métier propre au dépôt.
 export const OUTCOMES=["favorable","favorable_with_redactions","unfavorable","out_of_scope","unclear"];
 export function accessRequest(input){if(!input?.id || !input?.administration || !input?.document || !input?.receivedAt)
   throw new TypeError("A request needs id, administration, document and receivedAt");const date=new Date(input.receivedAt);if(Number.isNaN(date.valueOf()))throw new TypeError("receivedAt must be an ISO date");
