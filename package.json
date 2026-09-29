@@ -1,7 +1,7 @@
 {
   "name": "@gbesse/jev-cada-desk",
-  "version": "0.1.0",
-  "description": "Triage French public-document requests against sourced CADA precedents with mandatory human review.",
+  "version": "0.1.1",
+  "description": "Prépare le triage des demandes de documents publics à partir de précédents CADA sourcés.",
   "type": "module",
   "license": "MIT",
   "engines": {

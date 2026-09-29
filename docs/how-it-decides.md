@@ -1,5 +1,5 @@
-# How it decides
+# Comment la décision est prise
 
-The package validates provenance and dates, then asks Jev for a bounded analogy to one supplied precedent. Every output is marked for review and explicitly carries legalAdvice: false.
+Le dépôt valide provenance et dates, puis demande à Jev une analogie bornée avec un précédent fourni. Chaque sortie est marquée pour revue et ne constitue jamais un conseil juridique.
 
-The exact questions and criteria are versioned beside the call in [src/index.mjs](../src/index.mjs). Synthetic demo probabilities are illustrative. Calibrate thresholds on representative human labels before operational use.
+La question et les critères exacts sont versionnés dans [`src/index.mjs`](../src/index.mjs). Les probabilités de la démonstration sont synthétiques. Calibrez les seuils de revue sur des cas français annotés et représentatifs avant tout usage opérationnel.
