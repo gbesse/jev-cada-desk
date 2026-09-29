@@ -2,7 +2,7 @@
 
 **Prépare le triage des demandes de documents publics à partir de précédents CADA sourcés.**
 
-[![Tests](https://github.com/gbesse/jev-cada-desk/actions/workflows/test.yml/badge.svg)](https://github.com/gbesse/jev-cada-desk/actions/workflows/test.yml) [MIT](LICENSE) · Node.js 22+ · v0.1.1 · Documentation française
+[![Tests](https://github.com/gbesse/jev-cada-desk/actions/workflows/test.yml/badge.svg)](https://github.com/gbesse/jev-cada-desk/actions/workflows/test.yml) [MIT](LICENSE) · Node.js 22+ · v0.1.2 · Documentation française
 
 Le moteur rapproche une demande de communication d’un avis ou conseil CADA et produit une hypothèse de communicabilité ainsi qu’un score d’analogie.
 
@@ -16,6 +16,70 @@ npm run demo
 ```
 
 La démonstration utilise uniquement des données et probabilités synthétiques. Elle n’effectue aucun appel réseau et ne constitue pas une mesure de qualité de Jev.
+
+## Exemple exécutable
+
+Cet exemple prépare le triage d’une demande de contrat public. Il utilise un fournisseur Jev simulé : aucune clé API ni connexion réseau n’est nécessaire. L’assertion intégrée fait échouer la commande si le comportement attendu change.
+
+Le code complet de [`examples/demo.mjs`](examples/demo.mjs) est directement copiable :
+
+```js
+// Objectif : démontrer la frontière de décision sans appel réseau.
+import assert from "node:assert/strict";
+import { triageRequest } from "../src/index.mjs";
+import { createFakeProvider } from "../src/jev.mjs";
+const provider = createFakeProvider(() => ({
+  model: "jev-1.13.0",
+  answers: {
+    outcome: {
+      type: "choice",
+      choice: "favorable_with_redactions",
+      probabilities: {
+        favorable: 0.12,
+        favorable_with_redactions: 0.72,
+        unfavorable: 0.06,
+        out_of_scope: 0.02,
+        unclear: 0.08,
+      },
+      confidence: 0.72,
+    },
+    analogy: {
+      type: "score",
+      score: 2,
+      probabilities: { 0: 0.05, 1: 0.15, 2: 0.72, 3: 0.08 },
+      confidence: 0.72,
+    },
+  },
+  usage: { input_tokens: 75, output_tokens: 0 },
+}));
+const request = {
+  id: "REQ-1",
+  administration: "Ville Exemple",
+  document: "Contrat public et annexes",
+  receivedAt: "2026-09-01",
+};
+const precedent = {
+  reference: "SYNTHETIC-2026",
+  sessionDate: "2026-06-01",
+  administration: "Commune",
+  theme: "Marchés publics",
+  keywords: ["contrat"],
+  conclusion: "Favorable sous réserves",
+  text: "Le contrat est communicable après occultation des secrets protégés.",
+  sourceUrl: "https://www.cada.fr/",
+};
+const resultat = await triageRequest(request, precedent, provider);
+assert.equal(resultat.outcome, "favorable_with_redactions");
+console.log(JSON.stringify(resultat, null, 2));
+```
+
+Lancez-le avec :
+
+```sh
+npm run demo
+```
+
+Résultat à repérer : `outcome: favorable_with_redactions`.
 
 ## Utilisation de la bibliothèque
 
