@@ -2,7 +2,7 @@
 
 **Prépare le triage des demandes de documents publics à partir de précédents CADA sourcés.**
 
-[![Tests](https://github.com/gbesse/jev-cada-desk/actions/workflows/test.yml/badge.svg)](https://github.com/gbesse/jev-cada-desk/actions/workflows/test.yml) [MIT](LICENSE) · Node.js 22+ · v0.1.2 · Documentation française
+[![Tests](https://github.com/gbesse/jev-cada-desk/actions/workflows/test.yml/badge.svg)](https://github.com/gbesse/jev-cada-desk/actions/workflows/test.yml) [MIT](LICENSE) · Node.js 22+ · v0.1.3 · Documentation française
 
 Le moteur rapproche une demande de communication d’un avis ou conseil CADA et produit une hypothèse de communicabilité ainsi qu’un score d’analogie.
 
@@ -76,10 +76,20 @@ console.log(JSON.stringify(resultat, null, 2));
 Lancez-le avec :
 
 ```sh
-npm run demo
+npm run demo:principal
 ```
 
 Résultat à repérer : `outcome: favorable_with_redactions`.
+
+### Cas limite à tester
+
+Un précédent incomplet est rejeté avant l’étape de triage sémantique. Le code se trouve dans [`examples/cas-limite.mjs`](examples/cas-limite.mjs).
+
+```sh
+npm run demo:limite
+```
+
+Résultat à repérer : `gardeFou: precedent_incomplet · appels Jev: 0`. La commande `npm run demo` exécute les deux exemples.
 
 ## Utilisation de la bibliothèque
 
